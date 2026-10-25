@@ -1,8 +1,13 @@
-// The cards API in server/ (Vite proxies /api to it). Every call resolves to the full,
-// updated list of cards, like the Express version did.
+// The cards API in backend/. Every call resolves to the full, updated list of cards, like the
+// Express version did. A build calls the API directly at VITE_API_URL (the API's own address
+// when deployed, so the API has to list this site in its ALLOWED_ORIGINS); under the Vite dev
+// server it stays '' and Vite proxies /api to the backend.
+const apiBase = import.meta.env.DEV ? '' : (import.meta.env.VITE_API_URL ?? '').replace(/\/+$/, '');
+
 const request = async (method, path = '', body) => {
-  const res = await fetch(`/api/cards${path}`, {
+  const res = await fetch(`${apiBase}/api/cards${path}`, {
     method,
+    credentials: 'include',
     headers: body ? { 'Content-Type': 'application/json' } : undefined,
     body: body && JSON.stringify(body),
   });

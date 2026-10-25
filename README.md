@@ -4,13 +4,16 @@ Weather cards for US cities (2018), now on React 19, Vite 8, Hono and Bun. Add a
 
 ```sh
 bun install
-bun run dev       # API on 4113 + app on http://localhost:3113
-bun run test      # API tests
-bun run lint      # Biome (also the pre-commit hook)
-bun run build     # static app in frontend/dist/
+bun run dev             # API on 4113 + app on http://localhost:3113
+bun run test            # API tests
+bun run lint            # Biome (also the pre-commit hook)
+bun run build           # static app in frontend/dist/
+bun run build:frontend  # just the frontend (what Coolify's frontend builds with)
+bun run build:backend   # bundles backend/src into backend/dist to check its imports (it runs from src)
+bun run db:migrate      # no database: just says so (every app deploys with the same commands)
 ```
 
-`bun run dev` starts both workspaces through Turborepo. The frontend waits for the API's `/health`, then starts Vite, which proxies `/api` to it. The API listens on `PORT` in `backend/.env` (default 4113), and lets the browser origins in `ALLOWED_ORIGINS` there call it from another address (comma-separated, e.g. `http://localhost:3113`; the Vite proxy is same-origin and doesn't need it); the dev server uses `PORT` in `frontend/.env` (default 3113) and proxies to `VITE_API_URL` there (or the backend's `PORT`). To move the API, change both. A `PORT` set in the shell would reach both workspaces, so set ports in the `.env` files.
+`bun run dev` starts both workspaces through Turborepo. The frontend waits for the API's `/health`, then starts Vite, which proxies `/api` to it. The API listens on `PORT` in `backend/.env` (default 4113), and lets the browser origins in `ALLOWED_ORIGINS` there call it from another address (comma-separated, e.g. `http://localhost:3113`; the Vite proxy is same-origin and doesn't need it); the dev server uses `PORT` in `frontend/.env` (default 3113) and proxies to `VITE_API_URL` there (or the backend's `PORT`). A build calls `VITE_API_URL` directly instead, e.g. `https://api.<domain>` deployed, with the site in the API's `ALLOWED_ORIGINS` (`frontend/src/api.js`). To move the API, change both. A `PORT` set in the shell would reach both workspaces, so set ports in the `.env` files.
 
 | Workspace | Package | Path | Purpose |
 | --- | --- | --- | --- |

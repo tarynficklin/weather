@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "bun --watch src/server.js",
-    "start": "bun src/server.js",
+    "start": "NODE_ENV=production bun src/server.js",
+    "build": "bun build src/server.js --target=bun --outdir=dist --packages=external",
+    "db:migrate": "echo 'weather has no database: nothing to migrate'",
     "test": "bun test"
   },
   "dependencies": {

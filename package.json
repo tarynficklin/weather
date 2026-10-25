@@ -9,12 +9,15 @@
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",
+    "build:frontend": "bun run --cwd frontend build",
+    "build:backend": "turbo build --filter=@weather/backend",
+    "db:migrate": "turbo db:migrate",
     "test": "turbo run test",
     "lint": "bunx biome check .",
     "lint:fix": "bunx biome check . --write",
     "format": "bunx biome format . --write",
-    "start:frontend": "turbo run preview --filter=@weather/frontend",
-    "start:backend": "turbo run start --filter=@weather/backend",
+    "start:frontend": "turbo preview --filter=@weather/frontend",
+    "start:backend": "turbo start --filter=@weather/backend",
     "health:backend": "bun --cwd backend scripts/healthcheck.js",
     "health:frontend": "bun --cwd frontend scripts/healthcheck.js",
     "prepare": "husky"
