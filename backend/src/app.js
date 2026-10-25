@@ -1,10 +1,11 @@
 // The cards API: Hono, in place of Express and body-parser. server.js serves it; the tests
 // call app.request() directly.
 import { Hono } from 'hono';
-
 import controllers from './controllers/controller.js';
+import cors from './cors.js';
 
 const app = new Hono();
+app.use('*', cors()); // browser origins on other domains (ALLOWED_ORIGINS)
 
 const origin = '/api/cards';
 

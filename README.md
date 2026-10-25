@@ -10,7 +10,7 @@ bun run lint      # Biome (also the pre-commit hook)
 bun run build     # static app in frontend/dist/
 ```
 
-`bun run dev` starts both workspaces through Turborepo. The frontend waits for the API's `/health`, then starts Vite, which proxies `/api` to it. The API listens on `PORT` in `backend/.env` (default 4113); the dev server uses `PORT` in `frontend/.env` (default 3113) and proxies to `VITE_API_URL` there (or the backend's `PORT`). To move the API, change both. A `PORT` set in the shell would reach both workspaces, so set ports in the `.env` files.
+`bun run dev` starts both workspaces through Turborepo. The frontend waits for the API's `/health`, then starts Vite, which proxies `/api` to it. The API listens on `PORT` in `backend/.env` (default 4113), and lets the browser origins in `ALLOWED_ORIGINS` there call it from another address (comma-separated, e.g. `http://localhost:3113`; the Vite proxy is same-origin and doesn't need it); the dev server uses `PORT` in `frontend/.env` (default 3113) and proxies to `VITE_API_URL` there (or the backend's `PORT`). To move the API, change both. A `PORT` set in the shell would reach both workspaces, so set ports in the `.env` files.
 
 | Workspace | Package | Path | Purpose |
 | --- | --- | --- | --- |
