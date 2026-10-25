@@ -1,67 +1,138 @@
-p {padding: 0; margin: 0;}
+p {
+  padding: 0;
+  margin: 0;
+}
 
 #card {
-	width: 400px;
-	height: 200px;
-	margin: 20px;
+  width: 400px;
+  height: 200px;
+  margin: 20px;
 
-	color: white;
-	text-transform: uppercase;
-	
-	overflow: hidden;
-	border-radius: 5px;
-	background: dodgerblue;
-	background-size: cover;
+  color: white;
+  text-transform: uppercase;
 
-	transition: 2s linear all;
+  overflow: hidden;
+  border-radius: 5px;
+  background: dodgerblue;
+  background-size: cover;
 
-	box-shadow: 0px 5px 25px 0px rgba(0,0,0,0.25), inset 0px -5px 0px 0px rgba(0,0,0,0.15);
-	-moz-box-shadow: 0px 5px 25px 0px rgba(0,0,0,0.25), inset 0px -5px 0px 0px rgba(0,0,0,0.15);
-	-webkit-box-shadow: 0px 5px 25px 0px rgba(0,0,0,0.25), inset 0px -5px 0px 0px rgba(0,0,0,0.15);
+  transition: 2s linear all;
+
+  box-shadow:
+    0px 5px 25px 0px rgba(0, 0, 0, 0.25),
+    inset 0px -5px 0px 0px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow:
+    0px 5px 25px 0px rgba(0, 0, 0, 0.25),
+    inset 0px -5px 0px 0px rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow:
+    0px 5px 25px 0px rgba(0, 0, 0, 0.25),
+    inset 0px -5px 0px 0px rgba(0, 0, 0, 0.15);
 }
 
 .temp {
-	font-size: 75px;
-	font-weight: 700;
-	padding: 10px 0 0 30px;
+  font-size: 75px;
+  font-weight: 700;
+  padding: 10px 0 0 30px;
 }
 
-.location, .condition {font-size: 25px; text-transform: capitalize;}
+.location,
+.condition {
+  font-size: 25px;
+  text-transform: capitalize;
+}
 
 /* indednted according to how the divs are nested */
-.wrapper {display: flex; flex-direction: column; justify-content: space-between; height: 200px;}
-	.top-div {display: flex; flex-direction: row;}
-		.temp-div {display: flex; flex-direction: row;}
-		.info-div {display: flex; flex-direction: column; justify-content: center; flex-grow: 1; margin: 12px 0 0 20px;}
-			.dual-div {display: flex; flex-direction: row; justify-content: space-between;}
-				.location-div {display: flex; flex-direction: column;}
-				.delete-button {display: flex; flex-direction: column; margin-right: 30px;}
-			.condition-div {display: flex; flex-direction: column;}
-	.bottom-div {display: flex; flex-direction: row; align-items: stretch; justify-content: center; margin-bottom: 27px;}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 200px;
+}
+.top-div {
+  display: flex;
+  flex-direction: row;
+}
+.temp-div {
+  display: flex;
+  flex-direction: row;
+}
+.info-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 1;
+  margin: 12px 0 0 20px;
+}
+.dual-div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.location-div {
+  display: flex;
+  flex-direction: column;
+}
+.delete-button {
+  display: flex;
+  flex-direction: column;
+  margin-right: 30px;
+}
+.condition-div {
+  display: flex;
+  flex-direction: column;
+}
+.bottom-div {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: center;
+  margin-bottom: 27px;
+}
 
 .input {
-	background: rgba(255,255,255,.1);
-	border: 0;
-	width: 140px;
-	padding: 7px;
-	color: white;
+  background: rgba(255, 255, 255, 0.1);
+  border: 0;
+  width: 140px;
+  padding: 7px;
+  color: white;
 }
-.city-input {border-radius: 5px 0px 0px 5px;}
-.state-input {border-radius: 0px 5px 5px 0px;}
-.wrapper input::-moz-placeholder {color: white; opacity: 0.35;}
-.wrapper input::-webkit-input-placeholder {color: white; opacity: 0.35;}
+.city-input {
+  border-radius: 5px 0px 0px 5px;
+}
+.state-input {
+  border-radius: 0px 5px 5px 0px;
+}
+.wrapper input::-moz-placeholder {
+  color: white;
+  opacity: 0.35;
+}
+.wrapper input::-webkit-input-placeholder {
+  color: white;
+  opacity: 0.35;
+}
 
 .button {
-	color: inherit;
-	border: none;
-	padding: 0;
-	font: inherit;
-	outline: inherit;
-	border-radius: 2px;
-	height: 32px;
-	width: 32px;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  outline: inherit;
+  border-radius: 2px;
+  height: 32px;
+  width: 32px;
 }
-.edit-button		 {background: url('../resources/gear.png'); margin-left: 24px; transition: 0.2s;}
-.edit-button:hover   {background: url('../resources/gear.png') rgba(0,0,0,0.15);}
-.delete-button 		 {background: url('../resources/trash-can.png'); transition: 0.2s;}
-.delete-button:hover {background: url('../resources/trash-can.png') rgba(0,0,0,0.15);}
+.edit-button {
+  background: url('../resources/gear.png');
+  margin-left: 24px;
+  transition: 0.2s;
+}
+.edit-button:hover {
+  background: url('../resources/gear.png') rgba(0, 0, 0, 0.15);
+}
+.delete-button {
+  background: url('../resources/trash-can.png');
+  transition: 0.2s;
+}
+.delete-button:hover {
+  background: url('../resources/trash-can.png') rgba(0, 0, 0, 0.15);
+}

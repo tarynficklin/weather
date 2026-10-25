@@ -1,17 +1,17 @@
 //background images
-import drizzle      from '../resources/drizzle.png';
-import foggy        from '../resources/foggy.png';
-import hot          from '../resources/hot.png';
-import meteorite    from '../resources/meteorite.png';
-import mostlyClear  from '../resources/mostly-clear.png';
+import drizzle from '../resources/drizzle.png';
+import foggy from '../resources/foggy.png';
+import hot from '../resources/hot.png';
+import meteorite from '../resources/meteorite.png';
+import mostlyClear from '../resources/mostly-clear.png';
 import mostlyCloudy from '../resources/mostly-cloudy.png';
 import partlyCloudy from '../resources/partly-cloudy.png';
-import raining      from '../resources/raining.png';
-import sky          from '../resources/sky.png';
-import snowy        from '../resources/snowy.png';
-import stormy       from '../resources/stormy.png';
-import sunny        from '../resources/sunny.png';
-import windy        from '../resources/windy.png';
+import raining from '../resources/raining.png';
+import sky from '../resources/sky.png';
+import snowy from '../resources/snowy.png';
+import stormy from '../resources/stormy.png';
+import sunny from '../resources/sunny.png';
+import windy from '../resources/windy.png';
 
 //what a card shows before its weather loads, or when the city can't be found
 //(Yahoo's "not available" code fell through to the meteorite background too)
@@ -20,10 +20,10 @@ export const unknown = { condition: 'meteorites', background: meteorite };
 //Open-Meteo weather codes (WMO) -> [condition, background]. Day/night pairs keep the
 //backgrounds the Yahoo version picked for its matching day and night codes.
 const conditions = {
-  0:  { day: ['Sunny', hot],           night: ['Clear', sunny] },
-  1:  { day: ['Fair', sunny],          night: ['Fair', mostlyClear] },
-  2:  { day: ['Partly Cloudy', sky],   night: ['Partly Cloudy', partlyCloudy] },
-  3:  { day: ['Cloudy', sky],          night: ['Cloudy', mostlyCloudy] },
+  0: { day: ['Sunny', hot], night: ['Clear', sunny] },
+  1: { day: ['Fair', sunny], night: ['Fair', mostlyClear] },
+  2: { day: ['Partly Cloudy', sky], night: ['Partly Cloudy', partlyCloudy] },
+  3: { day: ['Cloudy', sky], night: ['Cloudy', mostlyCloudy] },
   45: ['Foggy', foggy],
   48: ['Foggy', foggy],
   51: ['Drizzle', drizzle],
@@ -55,8 +55,8 @@ export default function describe({ temp, code, isDay, wind }) {
   const dry = code <= 3;
 
   //Yahoo had its own "windy" and "hot" codes; Open-Meteo reports wind and temperature instead
-  if (dry && wind >= 25)                return { condition: 'Windy', background: windy };
-  if (code <= 1 && isDay && temp >= 95) return { condition: 'Hot',   background: hot };
+  if (dry && wind >= 25) return { condition: 'Windy', background: windy };
+  if (code <= 1 && isDay && temp >= 95) return { condition: 'Hot', background: hot };
 
   const match = conditions[code];
   if (!match) return unknown;

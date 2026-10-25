@@ -9,67 +9,67 @@ let id = 0;
 const findCardIndex = (c) => cardsArr.findIndex((val) => val.id === Number(c.req.param('id')));
 
 export default {
-	read: (c) => {
-		//returning to the user
-		return c.json(cardsArr);
-	},
+  read: (c) => {
+    //returning to the user
+    return c.json(cardsArr);
+  },
 
-	create: async (c) => {
-		//incrimenting the id
-		id++;
+  create: async (c) => {
+    //incrimenting the id
+    id++;
 
-		//destructing the body
-		const { city, state, temp, condition } = await c.req.json();
+    //destructing the body
+    const { city, state, temp, condition } = await c.req.json();
 
-		//the card to be created
-		cardsArr.push({
-			id        : id,
-			city      : city,
-			state     : state,
-			temp      : temp,
-			condition : condition
-		});
+    //the card to be created
+    cardsArr.push({
+      id: id,
+      city: city,
+      state: state,
+      temp: temp,
+      condition: condition,
+    });
 
-		//returning to the user
-		return c.json(cardsArr);
-	},
+    //returning to the user
+    return c.json(cardsArr);
+  },
 
-	update: async (c) => {
-		//making shortcuts
-		const { city, state, temp, condition } = await c.req.json();
+  update: async (c) => {
+    //making shortcuts
+    const { city, state, temp, condition } = await c.req.json();
 
-		//finding the index
-		const cardIndex = findCardIndex(c);
-		if (cardIndex === -1) return c.json({ error: 'Card not found.' }, 404);
-		const val = cardsArr[cardIndex];
+    //finding the index
+    const cardIndex = findCardIndex(c);
+    if (cardIndex === -1) return c.json({ error: 'Card not found.' }, 404);
+    const val = cardsArr[cardIndex];
 
-		//what the card is replaced with (empty fields keep the old value)
-		cardsArr[cardIndex] = {
-			id        : val.id,
-			city      : city      || val.city,
-			state     : state     || val.state,
-			temp      : temp      || val.temp,
-			condition : condition || val.condition
-		};
+    //what the card is replaced with (empty fields keep the old value)
+    cardsArr[cardIndex] = {
+      id: val.id,
+      city: city || val.city,
+      state: state || val.state,
+      temp: temp || val.temp,
+      condition: condition || val.condition,
+    };
 
-		//returning to the user
-		return c.json(cardsArr);
-	},
+    //returning to the user
+    return c.json(cardsArr);
+  },
 
-	delete: (c) => {
-		//finding the card index
-		const cardIndex = findCardIndex(c);
+  delete: (c) => {
+    //finding the card index
+    const cardIndex = findCardIndex(c);
 
-		//removing the card from the array (an unknown id used to remove the last card)
-		if (cardIndex !== -1) cardsArr.splice(cardIndex, 1);
+    //removing the card from the array (an unknown id used to remove the last card)
+    if (cardIndex !== -1) cardsArr.splice(cardIndex, 1);
 
-		//returning to the user
-		return c.json(cardsArr);
-	},
+    //returning to the user
+    return c.json(cardsArr);
+  },
 
-	//empties the cards (used by the tests)
-	reset: () => {
-		cardsArr = [];
-		id = 0;
-	}
+  //empties the cards (used by the tests)
+  reset: () => {
+    cardsArr = [];
+    id = 0;
+  },
 };

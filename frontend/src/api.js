@@ -10,7 +10,7 @@ const request = async (method, path = '', body) => {
   return res.json();
 };
 
-export const getCards   = ()         => request('GET');
-export const addCard    = (card)     => request('POST', '', card);
+export const getCards = () => request('GET');
+export const addCard = (card) => request('POST', '', card);
 export const updateCard = (id, card) => request('PUT', `/${id}`, card);
-export const removeCard = (id)       => request('DELETE', `/${id}`);
+export const removeCard = (id) => request('DELETE', `/${id}`);

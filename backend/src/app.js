@@ -9,10 +9,10 @@ const app = new Hono();
 const origin = '/api/cards';
 
 //===ENDPOINTS===
-app.get   (`${origin}`,      controllers.read  );
-app.post  (`${origin}`,      controllers.create);
-app.put   (`${origin}/:id`,  controllers.update);
-app.delete(`${origin}/:id`,  controllers.delete);
+app.get(`${origin}`, controllers.read);
+app.post(`${origin}`, controllers.create);
+app.put(`${origin}/:id`, controllers.update);
+app.delete(`${origin}/:id`, controllers.delete);
 //===ENDPOINTS===
 
 //for the healthcheck scripts and the frontend's `bun run dev`

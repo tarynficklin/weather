@@ -5,14 +5,22 @@ import states from './components/inputs/states';
 //"ut" or "Utah" -> "utah"
 const stateName = (state = '') => {
   const value = state.trim().toLowerCase();
-  const match = states.find(([code, name]) => code.toLowerCase() === value || name.toLowerCase() === value);
+  const match = states.find(
+    ([code, name]) => code.toLowerCase() === value || name.toLowerCase() === value,
+  );
   return match ? match[1].toLowerCase() : value;
 };
 
 //finds the US city, preferring one in the given state
 const findPlace = async (city, state) => {
   const url = new URL('https://geocoding-api.open-meteo.com/v1/search');
-  url.search = new URLSearchParams({ name: city.trim(), count: 10, language: 'en', format: 'json', countryCode: 'US' });
+  url.search = new URLSearchParams({
+    name: city.trim(),
+    count: 10,
+    language: 'en',
+    format: 'json',
+    countryCode: 'US',
+  });
   const { results = [] } = await (await fetch(url)).json();
   const wanted = stateName(state);
   return results.find((place) => place.admin1?.toLowerCase() === wanted) || results[0];
