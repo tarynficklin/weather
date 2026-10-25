@@ -1,17 +1,19 @@
 import react from '@vitejs/plugin-react';
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import { apiTarget } from './scripts/api-target.js';
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
-  // The cards API (../backend) listens on SERVER_PORT (default 4113), read from backend/.env
-  // or the shell (see scripts/api-target.js). This replaces Create React App's "proxy" setting.
+  // The cards API (../backend): VITE_API_URL, or the backend's PORT (see scripts/api-target.js).
+  // This replaces Create React App's "proxy" setting.
+  // PORT (this folder's .env or the shell) moves the dev server and its preview.
+  const port = Number(loadEnv(mode, import.meta.dirname, 'PORT').PORT) || 3113;
   const proxy = { '/api': { target: apiTarget(mode) } };
 
   return {
     plugins: [react()],
-    // Fixed per-app dev port so all the legacy apps can run side by side.
-    server: { port: 3113, strictPort: true, proxy },
-    preview: { port: 3113, strictPort: true, proxy },
+    // A fixed default port per app, so all the legacy apps can run side by side.
+    server: { port, strictPort: true, proxy },
+    preview: { port, strictPort: true, proxy },
   };
 });
