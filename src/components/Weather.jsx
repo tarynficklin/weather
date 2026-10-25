@@ -1,12 +1,12 @@
 //node modules
-import React, { Component } from 'react';
-import axios from 'axios';
+import { Component } from 'react';
 
 //dependencies
 import Card          from './cards/Card';
 import AddButton     from './inputs/AddButton';
 import CitySelector  from './inputs/CitySelector';
 import StateSelector from './inputs/StateSelector';
+import { addCard, getCards } from '../api';
 import './Weather.css';
 
 class Weather extends Component {
@@ -26,10 +26,10 @@ class Weather extends Component {
     this.getState       = this.getState.bind(this);
     this.updateCardsArr = this.updateCardsArr.bind(this);
   }
-  
+
   componentDidMount() {
     //gets data from local server
-    axios.get('/api/cards').then(results => this.setState({cardsArr: results.data}))
+    getCards().then(cards => this.setState({cardsArr: cards}))
   }
 
   //captures the user's input for adding a new card
@@ -39,17 +39,16 @@ class Weather extends Component {
 
   //creates a new card
   add() {
-    axios
-      .post('/api/cards', {
-        city  : this.state.city,
-        state : this.state.state
-      })
-      .then(results => this.setState({cardsArr: results.data}))
+    addCard({
+      city  : this.state.city,
+      state : this.state.state
+    })
+      .then(cards => this.setState({cardsArr: cards}))
   }
 
   render() {
     const { cardsArr } = this.state;
-    
+
     return (
       <div>
         <div className="input-bar">
@@ -59,10 +58,11 @@ class Weather extends Component {
         </div>
 
         <div className="card-field">
-          {cardsArr.map((e, i) => {
+          {/* keyed by id, so deleting a card doesn't hand its weather to the next one */}
+          {cardsArr.map((e) => {
             return (
               <Card
-                key   = { i }
+                key   = { e.id }
                 id    = { e.id }
                 city  = { e.city }
                 state = { e.state }

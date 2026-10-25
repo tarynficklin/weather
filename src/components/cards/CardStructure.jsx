@@ -1,10 +1,7 @@
-import React from 'react';
-
 export default function CardStructure(props) {
     let {
         city,
         state,
-        id,
         temp,
         condition,
         background,

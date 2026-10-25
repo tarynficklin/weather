@@ -1,71 +1,75 @@
+// The cards live in memory (this was the "no database" project), so they reset when the
+// server restarts. temp and condition are stored if sent, but the client looks the weather
+// up itself each time a card renders.
 let cardsArr = [];
 
 let id = 0;
 
-module.exports = {
-	read: ( req, res ) => {
+//finds a card by the :id route param
+const findCardIndex = (c) => cardsArr.findIndex((val) => val.id === Number(c.req.param('id')));
+
+export default {
+	read: (c) => {
 		//returning to the user
-		// res.status(200).send("Current Cards: \n" + JSON.stringify(cardsArr));
-		res.status(200).send(cardsArr)
+		return c.json(cardsArr);
 	},
-	 
-	create: ( req, res ) => {
+
+	create: async (c) => {
 		//incrimenting the id
 		id++;
 
 		//destructing the body
-		let { city, state, temp, condition } = req.body;
+		const { city, state, temp, condition } = await c.req.json();
 
 		//the card to be created
-		cardsArr.push(
-			{
-				id        : id,
-				city      : city,
-				state     : state,
-				temp      : temp,
-				condition : condition
-			});
+		cardsArr.push({
+			id        : id,
+			city      : city,
+			state     : state,
+			temp      : temp,
+			condition : condition
+		});
 
 		//returning to the user
-		// res.status(200).send("New Card Created. \n" + JSON.stringify(cardsArr))
-		res.status(200).send(cardsArr);
+		return c.json(cardsArr);
 	},
-	 
-	update: ( req, res ) => {
+
+	update: async (c) => {
 		//making shortcuts
-		const { city, state, temp, condition } = req.body;
-		const updateID = req.params.id;
+		const { city, state, temp, condition } = await c.req.json();
 
 		//finding the index
-		const cardIndex = cardsArr.findIndex(val => val.id == updateID);
-		let val = cardsArr[cardIndex];
+		const cardIndex = findCardIndex(c);
+		if (cardIndex === -1) return c.json({ error: 'Card not found.' }, 404);
+		const val = cardsArr[cardIndex];
 
-		//what the card is replaced with
+		//what the card is replaced with (empty fields keep the old value)
 		cardsArr[cardIndex] = {
-				id        : val.id,
-				city      : city      || val.city,
-				state     : state     || val.state,
-				temp      : temp      || val.temp,
-				condition : condition || val.condition
-		}
+			id        : val.id,
+			city      : city      || val.city,
+			state     : state     || val.state,
+			temp      : temp      || val.temp,
+			condition : condition || val.condition
+		};
 
 		//returning to the user
-		// res.status(200).send("Updated Card. \n" + JSON.stringify(cardsArr));
-		res.status(200).send(cardsArr);
+		return c.json(cardsArr);
 	},
-	 
-	delete: ( req, res ) => {
-		//making a shortcut to the id
-		const deleteID = req.params.id;
 
+	delete: (c) => {
 		//finding the card index
-		cardIndex=cardsArr.findIndex(val => val.id == deleteID);
+		const cardIndex = findCardIndex(c);
 
-		//removing the card from the array
-		cardsArr.splice(cardIndex, 1);
+		//removing the card from the array (an unknown id used to remove the last card)
+		if (cardIndex !== -1) cardsArr.splice(cardIndex, 1);
 
 		//returning to the user
-		// res.status(200).send("Deleted Card. \n" + JSON.stringify(cardsArr));
-		res.status(200).send(cardsArr);
+		return c.json(cardsArr);
+	},
+
+	//empties the cards (used by the tests)
+	reset: () => {
+		cardsArr = [];
+		id = 0;
 	}
-}
+};

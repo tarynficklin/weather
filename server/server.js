@@ -1,23 +1,9 @@
-require('dotenv').config();
-const express = require('express');
-const bodyParser = require('body-parser');
+// Run with `bun run server` (or `bun run dev` for the API + Vite). Bun loads .env, and a
+// SERVER_PORT already set in the shell wins. Vite proxies /api here.
+import app from './app.js';
 
-const app = express();
+const port = Number(process.env.SERVER_PORT) || 4113;
 
-//app.use for all middlewares
-app.use(bodyParser.json());
+Bun.serve({ port, fetch: app.fetch });
 
-const origin = "/api/cards";
-const controllers = require('./controllers/controller.js')
-
-//===ENDPOINTS===
-app.get   (`${origin}`,      controllers.read )
-app.post  (`${origin}`,      controllers.create)
-app.put   (`${origin}/:id`,  controllers.update)
-app.delete(`${origin}/:id`,  controllers.delete)
-//===ENDPOINTS===
-
-const port = 3005;
-app.listen(port, () => {
-	console.log(`Server is running on port: ${port}`)
-})
+console.log(`Server is running on port: ${port}`);
