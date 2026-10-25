@@ -1,16 +1,12 @@
-import { fileURLToPath, URL } from 'node:url'
-import { defineConfig, loadEnv } from 'vite'
+import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-
-const root = fileURLToPath(new URL('.', import.meta.url))
+import { apiTarget } from './scripts/api-target.js'
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
-  // The cards API (server/server.js) listens on SERVER_PORT (default 4113). loadEnv reads
-  // .env the same way the API does, and a SERVER_PORT already set in the shell wins.
-  // This replaces Create React App's "proxy" setting.
-  const { SERVER_PORT } = loadEnv(mode, root, 'SERVER_')
-  const proxy = { '/api': { target: `http://localhost:${SERVER_PORT || 4113}` } }
+  // The cards API (../backend) listens on SERVER_PORT (default 4113), read from backend/.env
+  // or the shell (see scripts/api-target.js). This replaces Create React App's "proxy" setting.
+  const proxy = { '/api': { target: apiTarget(mode) } }
 
   return {
     plugins: [react()],

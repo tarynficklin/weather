@@ -1,0 +1,14 @@
+{
+  "name": "@weather/backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun --watch src/server.js",
+    "start": "bun src/server.js",
+    "test": "bun test"
+  },
+  "dependencies": {
+    "hono": "^4.13.13"
+  }
+}
